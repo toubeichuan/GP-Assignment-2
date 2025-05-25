@@ -1,5 +1,6 @@
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
 public class Stickman_Badminton extends GameEngine {
@@ -43,10 +44,11 @@ public class Stickman_Badminton extends GameEngine {
     private double instTimer = 0;
     private boolean nextServerLeft = true;  // left first server
     private boolean wasInPlay;
-    private static final int WIN_SCORE = 21;
+    private static final int WIN_SCORE = 1;
     private boolean restart = false;
     private boolean gameOver = false;
     private boolean enterFlag = false;
+
     public static void main(String[] args) {
         createGame(new Stickman_Badminton());
     }
@@ -535,6 +537,117 @@ public class Stickman_Badminton extends GameEngine {
         if (k == KeyEvent.VK_D || k == KeyEvent.VK_A) leftPlayer.setAction(Player.Action.Standing);
         if (k == KeyEvent.VK_RIGHT || k == KeyEvent.VK_LEFT) rightPlayer.setAction(Player.Action.Standing);
         if (k == KeyEvent.VK_ENTER) enterFlag = false;
+    }
+
+    public void mousePressed(MouseEvent e) {
+        // If use pressed left button
+        double bx = e.getX();
+        double by = e.getY();
+
+        if(e.getButton() == MouseEvent.BUTTON1) {
+            // Fire a shell
+           if (gameState == GameState.Menu) {
+
+               // 530 350
+               if (bx > 530 && bx < 700){
+                   if (by > 330  && by < 370) {
+                       menuOption = 0;
+                       gameState = GameState.Inst;
+                       instTimer   = 0;
+                   }
+                   if (by > 370  && by < 410){
+                       menuOption = 1;
+                       gameState = GameState.Inst;
+                       instTimer   = 0;
+                   }
+                   if (by > 410  && by < 450)
+                   {
+                       menuOption = 2;
+                       System.exit(0);
+                   }
+               }
+           } else if (gameState == GameState.PlayOneEnd) {
+               if (bx > 270 && bx < 500){
+                   if (by > 210  && by < 260) {
+                       endOption = 0;
+                       gameState = GameState.PlayTwo;
+                       restart = true;
+                   }
+                   if (by > 260  && by < 310){
+                       endOption = 1;
+                       gameState = GameState.Menu;
+                   }
+                   if (by > 310  && by < 360)
+                   {
+                       endOption = 2;
+                       System.exit(0);
+                   }
+               }
+           }else if (gameState == GameState.PlayTwoEnd) {
+               if (bx > 270 && bx < 500){
+                   if (by > 210  && by < 260) {
+                       endOption = 0;
+                       gameState = GameState.PlayTwo;
+                       restart = true;
+                   }
+                   if (by > 260  && by < 310){
+                       endOption = 1;
+                       gameState = GameState.Menu;
+                   }
+                   if (by > 310  && by < 360)
+                   {
+                       endOption = 2;
+                       System.exit(0);
+                   }
+               }
+           }
+        }
+    }
+
+    public void mouseMoved(MouseEvent e) {
+        double bx = e.getX();
+        double by = e.getY();
+        if (gameState == GameState.Menu) {
+            // 530 350
+            if (bx > 300 && bx < 700){
+                if (by > 330  && by < 370) {
+                    menuOption = 0;
+                }
+                if (by > 370  && by < 410){
+                    menuOption = 1;
+                }
+                if (by > 410  && by < 450)
+                {
+                    menuOption = 2;
+                }
+            }
+        }else if (gameState == GameState.PlayOneEnd) {
+            if (bx > 270 && bx < 500){
+                if (by > 210  && by < 260) {
+                    endOption = 0;
+                }
+                if (by > 260  && by < 310){
+                    endOption = 1;
+                }
+                if (by > 310  && by < 360)
+                {
+                    endOption = 2;
+                }
+            }
+        }else if (gameState == GameState.PlayTwoEnd) {
+            if (bx > 270 && bx < 500){
+                if (by > 210  && by < 260) {
+                    endOption = 0;
+                }
+                if (by > 260  && by < 310){
+                    endOption = 1;
+                }
+                if (by > 310  && by < 360)
+                {
+                    endOption = 2;
+                }
+            }
+        }
     }
 
     // --------------------------------------------------------------------
