@@ -89,7 +89,7 @@ project-root/
 
 ## Game Modes
 
-1. ** Single-player Mode **
+1. **Single-player Mode**
    Train your serve and rally against an AI robot that automatically tracks the shuttle and hits it back.
 
 2. **Two-player Mode (Local Multiplayer)**
