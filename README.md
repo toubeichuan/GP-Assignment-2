@@ -215,8 +215,6 @@ Below is a list of all third-party assets and libraries used in **Stickman Badmi
 
 ---
 
-Be sure to include this attribution section in your project’s README or documentation if you distribute or publish the game.
-
 Enjoy training and competing in **Stickman Badminton**! Pull, serve, and rally your way to victory. 
 
 
