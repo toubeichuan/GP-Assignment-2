@@ -7,7 +7,7 @@ public class Birdie {
     private final int size = 30;                // 固定 50×50
     private boolean inPlay = false;
 
-    // 物理属性
+    // Physical properties
     public double x, y;
     public double vx, vy;
     private static final double GRAVITY    = 800;
@@ -24,7 +24,7 @@ public class Birdie {
         this.image  = engine.loadImage(imagePath);
     }
 
-    /** 发球，从 (startX, startY) 中心发出，dir = ±1 */
+    /** Serve from the (startX, startY) center，dir = ±1 */
     public void serve(double startX, double startY, int dir) {
         this.x       = startX;
         this.y       = startY;
@@ -34,7 +34,7 @@ public class Birdie {
     }
 
     public Rectangle2D getHitBox() {
-        // 中心 (x,y)，大小 SIZE×SIZE
+        // Center (x,y), size SIZE×SIZE
         return new Rectangle2D.Double(
                 x - size/2.0,
                 y - size /2.0,
@@ -42,35 +42,35 @@ public class Birdie {
                 size
         );
     }
-    /** 是否还在场上飞行 */
+    /** Is it still flying on the field */
     public boolean isInPlay() {
         return inPlay;
     }
 
-    /** 每帧更新物理 */
+    /** Update the physics per frame */
     public void update(double dt) {
         if (!inPlay) return;
 
-        // 重力
+        // Gravity
         x  += vx * dt;
         y  += vy * dt;
 
-        // 落地判定（画布高固定 500）
+        // Landing determination (Canvas height fixed at 500)
         double groundY = 470;
         if (y >= groundY) {
-            // 第一次触地时，把 y 固定到地面高度，并清零垂直速度
+            // When touching the ground for the first time, fix y to the ground height and reset the vertical velocity to zero
             y  = groundY;
             vy = 0;
             vx *= 0.5;
-            // 累加滑行时间
+            // Accumulate the sliding time
             groundTimer += dt;
 
-            // 如果滑行超过 0.5s，才真正结束飞行
+            // If the glide exceeds 0.5 seconds, the flight will truly end
             if (groundTimer >= GROUND_SLIDE_DURATION) {
                 inPlay = false;
             }
         } else {
-            // 左右反弹（画布宽度固定 800）
+            // Left and right rebound (Canvas width fixed at 800)
             if (x < 0) {
                 x  = 0;
                 vx = -vx * BOUNCE_DAMPING;
@@ -83,7 +83,7 @@ public class Birdie {
                 vx = -vx * 0.01;
             }
 
-            // 阻尼和重力
+            // Damping and Gravity
             vy += GRAVITY * dt;
 
             vx *= Math.max(0, 1 - DRAG_H * dt);
@@ -92,22 +92,22 @@ public class Birdie {
         }
     }
 
-    /** 绘制到屏幕上，并根据速度方向旋转 */
+    /** Draw it on the screen and rotate it according to the speed direction */
     public void draw() {
         if (!inPlay) return;
 
-        // 保存当前 transform
+        // Save the current transform
         engine.saveCurrentTransform();
 
-        // 移动到羽毛球中心
+        // Move to the badminton center
         engine.translate(x, y);
 
-        // 计算旋转角：atan2(vy, vx) + 90°，因为贴图默认朝上
+        // Calculate the rotation Angle: atan2(vy, vx) + 90°, as the texture is projected upwards by default
         double angle = Math.toDegrees(Math.atan2(vy, vx)); //+ Math.PI / 2)
         engine.rotate(angle);
         // System.out.println(angle);
 
-        // 绘制贴图（相对于中心点偏移 size/2）
+        // Draw the map (offset by size/2 relative to the center point)
         engine.drawImage(image,
                 -size / 2,
                 -size / 2,
@@ -116,7 +116,7 @@ public class Birdie {
 //                -size / 2,
 //                -size / 2,
 //                size, size);
-        // 恢复 transform
+        // Restore transform
         engine.restoreLastTransform();
 
     }

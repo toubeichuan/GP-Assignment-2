@@ -23,7 +23,7 @@ public class Stickman_Badminton extends GameEngine {
     // --------------------------------------------------------------------
     // Hit Box Visualization
     // --------------------------------------------------------------------
-    private final boolean HitBoxVisualization = true;
+    private final boolean HitBoxVisualization = false;
 
     // --------------------------------------------------------------------
     // Game Objects
@@ -105,12 +105,12 @@ public class Stickman_Badminton extends GameEngine {
             case Menu:
                 return;
             case PlayOne:
-                // ——— 人类左侧更新 ———
+                // ——— Update the left side ———
                 leftPlayer.update(dt);
 
-                // ——— 机器人右侧 AI 更新 ———
+                // ——— Update the robot ai on the right ———
                 rightPlayer.update(dt);
-                // 如果球飞行中，让机器人追踪球的 x
+                // If the ball is in flight, let the robot track the x of the ball
                 if (birdie.isInPlay() && birdie.x > 400) {
                     double targetX = birdie.x - 75 - 10; // 机器人 x 对齐球心
                     double targetY = birdie.y;
@@ -125,18 +125,18 @@ public class Stickman_Badminton extends GameEngine {
                         }
                     } else {
                         rightPlayer.setAction(Player.Action.Standing);
-                        // 如果球到了拍击范围，就挥拍
+                        // If the ball is within the hitting range, swing the racket
                         if (Math.abs(targetY - rightPlayer.y) < 40){
                             rightPlayer.setAction(Player.Action.Swing);
                         }
                     }
                 } else {
-                    // 球不在飞行，就保持站立
+                    // If the ball is not flying, it remains standing
                     rightPlayer.setAction(Player.Action.Standing);
                 }
                 
 
-                // ——— 自动发球 ————
+                // ——— Automatic serve ————
                 if (!birdie.isInPlay()) {
                     if (nextServerLeft && leftPlayer.consumeServeFinished()) {
                         serveFrom(leftPlayer);
@@ -151,21 +151,21 @@ public class Stickman_Badminton extends GameEngine {
                     }
                 }
 
-                // 3) 碰撞前记录状态，用于落地判分
+                // 3) Record the status before the collision
                 wasInPlay = birdie.isInPlay();
                 // System.out.println(wasInPlay);
-                // 4) 更新羽毛球物理（重力、边界反弹、落地）
+                // 4) Update badminton physics
                 birdie.update(dt);
 
-                // 5) 如果仍在飞行，检测挥拍命中并反弹
+                // 5) Detect the hit and rebound of the swing
                 if (birdie.isInPlay()) {
                     if (leftPlayer.tryHit(birdie)) {
-                        // 1) 读取挥拍角度（degrees → radians）
+                        // 1) Read the swing Angle（degrees → radians）
                         double angleRad = Math.toRadians(leftPlayer.getRacketAngle());
-                        // 2) 加一点随机加速度 (这里最多再+30%)
+                        // 2) Add random acceleration (up to 30% more here)
                         double randomFactor = 1 + rand(0.5);
                         double bounceSpeed = BIRDIE_BOUNCE_SPEED * randomFactor;
-                        // 3) 按角度给出 vx, vy （0° 对应正上方）
+                        // 3) Give vx and vy by Angle (0° corresponds directly above)
                         birdie.vx = Math.sin(angleRad) * bounceSpeed;
                         birdie.vy = -Math.cos(angleRad / 2) * bounceSpeed;
 
@@ -183,7 +183,7 @@ public class Stickman_Badminton extends GameEngine {
                     }
                 }
 
-                // 6) 从飞行到不飞行：落地判分并切换发球权
+                // 6) From flying to not flying: The point is awarded upon landing and the serve is switched
                 if (wasInPlay && !birdie.isInPlay()) {
                     if (birdie.x < CANVAS_WIDTH / 2) {
                         scoreRight++;
@@ -201,11 +201,11 @@ public class Stickman_Badminton extends GameEngine {
                 break;
 
             case PlayTwo:
-                // 1) 更新玩家（处理移动、挥拍、发球、跳跃）
+                // 1) Update players (handle movement, swing, serve, jump)
                 leftPlayer.update(dt);
                 rightPlayer.update(dt);
 
-                // 2) 如果球当前不在飞行中且发球动画完成，则发球
+                // 2) If the ball is not in flight at present and the serve animation is completed, the serve is made
                 if (!birdie.isInPlay()) {
                     if (nextServerLeft && leftPlayer.consumeServeFinished()) {
                         serveFrom(leftPlayer);
@@ -219,21 +219,21 @@ public class Stickman_Badminton extends GameEngine {
                     }
                 }
 
-                // 3) 碰撞前记录状态，用于落地判分
+                // 3) Record the status before the collision for landing scoring
                 wasInPlay = birdie.isInPlay();
 
-                // 4) 更新羽毛球物理（重力、边界反弹、落地）
+                // 4) Update badminton physics (gravity, boundary rebound, landing)
                 birdie.update(dt);
 
-                // 5) 如果仍在飞行，检测挥拍命中并反弹
+                // 5) If still in flight, detect that the swing hits and bounces
                 if (birdie.isInPlay()) {
                     if (leftPlayer.tryHit(birdie)) {
-                        // 1) 读取挥拍角度（degrees → radians）
+                        // 1) Read the swing Angle（degrees → radians）
                         double angleRad = Math.toRadians(leftPlayer.getRacketAngle());
-                        // 2) 加一点随机加速度 (这里最多再+30%)
+                        // 2) Add random acceleration (up to 30% more here)
                         double randomFactor = 1 + rand(0.5);
                         double bounceSpeed = BIRDIE_BOUNCE_SPEED * randomFactor;
-                        // 3) 按角度给出 vx, vy （0° 对应正上方）
+                        // 3) Give vx and vy by Angle (0° corresponds directly above)
                         birdie.vx = Math.sin(angleRad) * bounceSpeed;
                         birdie.vy = -Math.cos(angleRad / 2 ) * bounceSpeed;
 
@@ -251,7 +251,7 @@ public class Stickman_Badminton extends GameEngine {
                     }
                 }
 
-                // 6) 从飞行到不飞行：落地判分并切换发球权
+                // 6) From flying to not flying: The point is awarded upon landing and the serve is switched
                 if (wasInPlay && !birdie.isInPlay()) {
                     if (birdie.x < CANVAS_WIDTH / 2) {
                         scoreRight++;
@@ -315,7 +315,7 @@ public class Stickman_Badminton extends GameEngine {
     private void drawPlayOne() {
         drawImage(background, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         drawScore( scoreLeft, scoreRight);
-        // 绘制玩家和羽毛球
+        // Draw the player and the badminton
         leftPlayer.draw();
         rightPlayer.draw();
         birdie.draw();
@@ -328,7 +328,7 @@ public class Stickman_Badminton extends GameEngine {
     private void drawPlayTwo() {
         drawImage(background, 0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
         drawScore( scoreLeft, scoreRight);
-        // 绘制玩家和羽毛球
+        // Draw the player and the badminton
         leftPlayer.draw();
         rightPlayer.draw();
         birdie.draw();
@@ -456,7 +456,7 @@ public class Stickman_Badminton extends GameEngine {
                     } else if (menuOption == 1) {
                         gameState = GameState.Inst;
                         instTimer   = 0;
-                    } else {                       // 退出
+                    } else {                       // Quit
                         System.exit(0);
                     }
                 }

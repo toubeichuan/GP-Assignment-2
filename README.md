@@ -1,6 +1,9 @@
 # Stickman Badminton
 
 ---
+![logo](img/menu.png)
+
+---
 Group member
 
 | Name | Massey ID |
@@ -61,9 +64,7 @@ project-root/
 │  ├ Stickman_Badminton.java       # Main game class & menu logic
 │  ├ GameEngine.java               # Simple drawing + input framework
 │  ├ Player.java                   # Human player implementation
-│  ├ Robot.java                    # AI opponent implementation
 │  ├ Birdie.java                   # Shuttlecock physics & rendering
-│  └ ...                           # Other support classes
 ├─ img/
 │  ├ background.png
 │  ├ menu.png
@@ -113,7 +114,7 @@ After selecting a mode, a **1.5 s** instruction screen displays controls, then t
 | Jump           | **W**                  | **↑**          |
 | Serve / Swing  | **S**                  | **↓**          |
 | Menu Up/Down   | **↑**/**↓**, **Enter** |(menu only)     |
-
+![controls](img/inst2.png)
 ---
 
 ## Scoring & Rules

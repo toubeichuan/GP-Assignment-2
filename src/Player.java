@@ -7,34 +7,34 @@ public class Player {
     private final GameEngine engine;
     private final String folder;
     public double x, y;           // 当前位置
-    private final int serveDir;    // +1：左→右，-1：右→左
+    private final int serveDir;    // +1：left→right，-1：right→left
     private final double initialX, initialY;
 
     private double restrictedMinX, restrictedMaxX;
     private double SwingMinX,     SwingMaxX;
 
-    // 水平动画帧
+    // Horizontal animation frame
     private Image standing;
     private Image[] serving, forward, backward, swing;
     private Image shadow;
-    // 发球动画
+    // Serve animation
     private double serveTimer = 0;
     private final double serveDuration = 0.4;
     private boolean serveFinishedFlag = false;
 
-    // 挥拍动画
+    // Swing animation
     private double swingTimer = 0;
     private final double swingDuration = 0.3;
     private double swingAngle = 0 ;
 
-    // 跳跃状态（与 Action 并行）
+    // Jump state (parallel to Action)
     private boolean isJumping = false;
     private double baselineY;             // 地面 y 坐标
     private double vy = 0;                // 垂直速度
     private final double JUMP_VELOCITY = -300;  // 跳得更低一点
     private final double GRAVITY       = 800;
 
-    // 水平移动
+    // Move horizontally
     private final double speed = 320;
     private double minX, maxX;
 
@@ -123,7 +123,7 @@ public class Player {
         }
     }
 
-    /** 外部调用，触发跳跃（只在地面上生效） */
+    /** External invocation, triggering a jump (only effective on the ground) */
     public void jump() {
         if (!isJumping && y == baselineY) {
             isJumping = true;
@@ -132,7 +132,7 @@ public class Player {
     }
 
     public void update(double dt) {
-        // —— 垂直物理（跳跃／下落） ——
+        // —— Vertical physics (jumping/falling) ——
         if (isJumping) {
             vy += GRAVITY * dt;
             y  += vy * dt;
@@ -143,12 +143,12 @@ public class Player {
             }
         }
 
-        // —— 水平移动 ——
+        // —— Horizontal movement ——
         if (action == Action.Forward)  x += speed * dt;
         if (action == Action.Backward) x -= speed * dt;
         x = Math.max(minX, Math.min(maxX, x));
 
-        // —— 发球动画 ——
+        // —— Serve animation ——
         if (action == Action.Serving) {
             serveTimer += dt;
             if (serveTimer >= serveDuration) {
@@ -158,7 +158,7 @@ public class Player {
             }
         }
 
-        // —— 挥拍动画 ——
+        // —— Swing animation ——
         if (action == Action.Swing) {
             swingTimer += dt;
             if (swingTimer >= swingDuration) {
@@ -195,7 +195,7 @@ public class Player {
     }
 
 
-    /** 空中/地面都可以挥拍击球 */
+    /** Can swing the racket to hit the ball either in the air or on the ground */
     public boolean tryHit(Birdie b) {
         if (action!=Action.Swing || swingTimer> swingDuration/2) return false;
         return getRacketHitBox().intersects(b.getHitBox());
