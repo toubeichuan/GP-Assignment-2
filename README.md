@@ -28,7 +28,7 @@ Group member
 8. [Assets](#assets)  
 9. [Audio & Effects](#audio--effects)  
 10. [Extensibility](#extensibility)  
-
+11. [Resource Attributions](#resource-attributions)
 ---
 
 ## Features
