@@ -19,16 +19,15 @@ Group member
 ## Table of Contents
 
 1. [Features](#features)  
-2. [Requirements](#requirements)  
-3. [Installation & Running](#installation--running)  
-4. [Directory Structure](#directory-structure)  
-5. [Game Modes](#game-modes)  
-6. [Controls](#controls)  
-7. [Scoring & Rules](#scoring--rules)  
-8. [Assets](#assets)  
-9. [Audio & Effects](#audio--effects)  
-10. [Extensibility](#extensibility)  
-11. [Resource Attributions](#resource-attributions)
+2. [Requirements](#requirements)
+3. [Directory Structure](#directory-structure)  
+4. [Game Modes](#game-modes)  
+5. [Controls](#controls)  
+6. [Scoring & Rules](#scoring--rules)  
+7. [Assets](#assets)  
+8. [Audio & Effects](#audio--effects)
+9. [Extensibility](#extensibility)
+10. [Resource Attributions](#resource-attributions)
 ---
 
 ## Features
@@ -49,20 +48,6 @@ Group member
 - **JavaSound** support for PCM-encoded WAV files (MP3 via SPI plugin if desired)  
 
 ---
-
-## Installation & Running
-
-1. **Clone or download** this repository.  
-2. **Compile** all `.java` files:
-   ```bash
-   javac -d out src/*.java
-    ```
-
-3. **Run** the main class:
-
-   ```bash
-   java -cp out Stickman_Badminton
-   ```
 
 > Ensure your working directory contains the `img/` and `Audio/` folders alongside the compiled classes.
 
@@ -103,7 +88,7 @@ project-root/
 
 ## Game Modes
 
-1. **Practice Mode (Single-player)**
+1. ** Single-player Mode **
    Train your serve and rally against an AI robot that automatically tracks the shuttle and hits it back.
 
 2. **Two-player Mode (Local Multiplayer)**
@@ -122,13 +107,12 @@ After selecting a mode, a **1.5 s** instruction screen displays controls, then t
 ## Controls
 
 | Action         | Left Player Keys       | Right Player Keys |
-| -------------- | ---------------------- | ----------------- |
-| Move Forward   | **D**                  | **→**             |
-| Move Backward  | **A**                  | **←**             |
-| Jump           | **W**                  | **↑**             |
-| Serve / Swing  | **S**                  | **↓**             |
-| Pause / Resume | **P** (both modes)     | —                 |
-| Menu Up/Down   | **↑**/**↓**, **Enter** | — (menu only)     |
+| -------------- | ---------------------- | -------------- |
+| Move Forward   | **D**                  | **→**          |
+| Move Backward  | **A**                  | **←**          |
+| Jump           | **W**                  | **↑**          |
+| Serve / Swing  | **S**                  | **↓**          |
+| Menu Up/Down   | **↑**/**↓**, **Enter** |(menu only)     |
 
 ---
 
@@ -136,7 +120,6 @@ After selecting a mode, a **1.5 s** instruction screen displays controls, then t
 
 * **Rally** until one side fails to return (shuttle lands on ground).
 * **First to 21 points** wins the match.
-* Must win by **two-point margin**? *(Optional rule extension)*
 * After match end, an **End-screen** appears with options:
 
     * **Restart**: Play again in the same mode.
