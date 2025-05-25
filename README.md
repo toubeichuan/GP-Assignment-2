@@ -12,7 +12,19 @@ Group member
 | Jinhao Guo | 23009971  |
 | Yang Li | 23010055  |
 | Jiale Wang | 23010109  |
-
+---
+> **Troubleshooting**
+>
+> If you run into problems, just re-clone the repo:
+> ```bash
+> # HTTPS
+> git clone https://github.com/toubeichuan/GP-Assignment-2.git
+>
+> # SSH
+> git clone git@github.com:toubeichuan/GP-Assignment-2.git
+> ```
+>
+> **Note:** This project has been tested only on macOS.
 
 ---
 **Stickman Badminton** is a Java-based local multiplayer and AI-powered single-player badminton game built on a lightweight `GameEngine`. Two stick-figure players face off on a flat court, using realistic physics, animations, and sound effects. First to 21 points wins; after a match you can choose to restart, return to the main menu, or quit.
