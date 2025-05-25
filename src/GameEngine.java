@@ -73,7 +73,7 @@ public abstract class GameEngine implements KeyListener, MouseListener, MouseMot
 
 		mFrame.setSize(width, height);
 		mFrame.setLocation(200,200);
-		mFrame.setTitle("Window");
+		mFrame.setTitle("Stickman Badminton");
 		mFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		mFrame.add(mPanel);
 		mFrame.setVisible(true);

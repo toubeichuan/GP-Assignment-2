@@ -1,4 +1,3 @@
-import javax.swing.*;
 import java.awt.*;
 import java.awt.geom.*;
 
@@ -17,7 +16,7 @@ public class Player {
     // 水平动画帧
     private Image standing;
     private Image[] serving, forward, backward, swing;
-
+    private Image shadow;
     // 发球动画
     private double serveTimer = 0;
     private final double serveDuration = 0.4;
@@ -59,9 +58,9 @@ public class Player {
         backward = loadFrames("backward", 8);
         swing    = loadFrames("swing",   12);
         serving  = loadFrames("serving", 8);
+        shadow = engine.loadImage("img/shadow.png");
 
-        // 计算半场和全场限位
-        int mid = 800 / 2;                // 画布宽度硬编码 800
+        int mid = 800 / 2;
 
         if (serveDir > 0) {
             restrictedMinX = -25;
@@ -74,25 +73,22 @@ public class Player {
             SwingMinX = mid - 50 + 150 ;
             SwingMaxX =  800 - 125;
         }
-        // 默认先用半场限位
+
         setSwingBounds();
 
-        baselineY = y;  // 记录“地面”高度
+        baselineY = y;
     }
 
-    /** 切换到“发球前”半场限位 */
     public void setRestrictedBounds() {
         this.minX = restrictedMinX;
         this.maxX = restrictedMaxX;
     }
 
-    /** 切换到全场限位 */
     public void setSwingBounds() {
         this.minX = SwingMinX;
         this.maxX = SwingMaxX;
     }
 
-    /** 得分后重置到初始位置 */
     public void resetPosition() {
         this.x = initialX;
         this.y = initialY;
@@ -107,16 +103,13 @@ public class Player {
         return arr;
     }
 
-    /** 水平/挥拍/发球 动作切换 */
     public void setAction(Action a) {
         switch (a) {
             case Swing:
                 action     = Action.Swing;
-                swingTimer = 0;
                 break;
             case Serving:
                 action        = Action.Serving;
-                serveTimer    = 0;
                 break;
             case Forward:
                 action = Action.Forward;
@@ -226,7 +219,6 @@ public class Player {
                 }else {
                     swingAngle = 0;
                 }
-                // System.out.println(swingTimer+ " "+ swingAngle);
                 break;
             case Serving:
                 int pi = (int)((serveTimer / serveDuration) * serving.length);
@@ -235,17 +227,18 @@ public class Player {
             default:
                 break;
         }
-        engine.drawImage(frame, (int)x, (int)y, 150, 150);
 
-//        Rectangle2D box = getRacketHitBox();
-//        engine.changeColor(255, 0, 0);
-//        engine.drawRectangle((int)box.getX(),
-//                (int)box.getY(),
-//                (int)box.getWidth(),
-//                (int)box.getHeight());
+        // Draw shadow
+        if ( y == initialY ){
+            if (serveDir == 1) engine.drawImage(shadow, (int)x + 49, (int)y + 60 , 50, 80);
+            else engine.drawImage(shadow, (int)x + 56, (int)y + 60 , 50, 80);
+        }
+
+        engine.drawImage(frame, (int)x, (int)y, 150, 150);
     }
 
     public int getServeDir() { return serveDir; }
     public Action getAction() { return action; }
-    public double getSwingAngle() { return swingAngle; }
+    public double getRacketAngle() { return swingAngle + 45; }
+    public void setServeFinished(boolean serveFinishedFlag) {this.serveFinishedFlag = serveFinishedFlag;}
 }
