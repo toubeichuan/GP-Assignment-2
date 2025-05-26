@@ -44,7 +44,7 @@ public class Stickman_Badminton extends GameEngine {
     private double instTimer = 0;
     private boolean nextServerLeft = true;  // left first server
     private boolean wasInPlay;
-    private static final int WIN_SCORE = 1;
+    private static final int WIN_SCORE = 21;
     private boolean restart = false;
     private boolean gameOver = false;
     private boolean enterFlag = false;
